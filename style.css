@@ -1,0 +1,51 @@
+
+header{
+    text-align: center;
+    height: 100px;
+    background-color: aqua;
+}
+
+.post{
+    width: 10px;
+    background-color: gray;
+    float: left;
+    position: relative;
+    margin-top: 10px;
+}
+
+#board{
+    display: flex;
+    justify-content: space-around;
+    background-color: lightblue;
+    height: 400px;
+    border-bottom: 10px solid gray;
+    border-radius: 10px;
+}
+
+.disk{
+    display: flex;
+    padding: 20px;
+    border: 3px solid black;
+}
+
+#block-1{
+    background-color: red;
+    width: 700%;
+}
+
+#block-2{
+    background-color: green;
+    width: 800%;
+}
+
+#block-3{
+    background-color: blue;
+    width: 900%;
+}
+
+#block-4{
+    background-color: purple;
+    float: left;
+    width: 1000%;
+    left: -500%;
+}
