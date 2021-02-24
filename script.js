@@ -1,11 +1,15 @@
 
+let postList = getChildDivs('#board')
+let gameWon = false
+let moves = 0
+const winningOrder = getChildDivs('#' + postList[0].id).map(item => parseInt(item.dataset.order))
+const movesTracker = document.querySelector('#movesTracker')
 
-
-
-let blockArray = Array.from(document.querySelectorAll('.disk'));
-blockArray.forEach(function (disk) {
-	disk.addEventListener('mousedown', clickFunction);
-});
+postList.forEach(function (post) {
+    post = getChildDivs('#' + post.id)
+	if(post.length > 0)
+    post[0].addEventListener('mousedown', clickFunction)
+})
 
 //the code below is refactored for my program from https://javascript.info/mouse-drag-and-drop
 function clickFunction(event) {
@@ -18,10 +22,11 @@ function clickFunction(event) {
 	event.target.style.zIndex = 1000;
     const leftMargin = parseInt((window.getComputedStyle(event.target).getPropertyValue('margin-left')))
     const marginTop = parseInt(window.getComputedStyle(event.target).getPropertyValue('margin-top'));
+    const distanceFromBottom = 45*(getChildDivs('#'+startingPost.id).length - 1)
 
 	//create point clicked on within the div
 	let shiftX = event.clientX - event.target.getBoundingClientRect().left + leftMargin
-	let shiftY = event.clientY - event.target.getBoundingClientRect().top + marginTop
+	let shiftY = event.clientY - event.target.getBoundingClientRect().top + marginTop + distanceFromBottom
 
 	// //move into body so that the absolute positioning responds to body
     
@@ -70,20 +75,48 @@ function clickFunction(event) {
 	// //add drop disk functionality
 	event.target.addEventListener('mouseup', (mouseUpEvent) => {
 		//if there is a current post, attach the disk to it, else move it back to starting disk
-		if (currentPost) {
-			let div = document.createElement('DIV');
-			div.classList.add('disk');
-			div.id = event.target.id;
-			currentPost.appendChild(div);
-			div.addEventListener('mousedown', clickFunction);
-			event.target.remove();
+		if (currentPost &&
+             (getChildDivs("#" + currentPost.id).length == 0 ||
+              getDiskAsInt(event.target) < getDiskAsInt(getChildDivs("#" + currentPost.id)[0]))) {
+            
+            
+            moves++
+            movesTracker.innerText = `moves: ${moves}`
+			if(getChildDivs("#" + currentPost.id).length > 0){
+                const div = makeDiv(event.target)
+                event.target.remove();
+                currentPost.prepend(div);
+                checkWin(div)
+                div.addEventListener('mousedown', clickFunction);
+                getChildDivs('#' + currentPost.id)[1].removeEventListener(
+					'mousedown',
+					clickFunction
+				);
+
+                if(getChildDivs('#' + startingPost.id).length >0){
+                    getChildDivs('#' + startingPost.id)[0].addEventListener(
+						'mousedown',
+						clickFunction
+					);
+                }
+            }else{
+                const div = makeDiv(event.target)
+				event.target.remove();
+				currentPost.prepend(div);
+                checkWin(div)
+				div.addEventListener('mousedown', clickFunction);
+                if (getChildDivs('#' + startingPost.id).length > 0) {
+					getChildDivs('#' + startingPost.id)[0].addEventListener(
+						'mousedown',
+						clickFunction
+					);
+				}
+            }
 		} else {
-			let div = document.createElement('DIV');
-			div.classList.add('disk');
-			div.id = event.target.id;
-			startingPost.appendChild(div);
-			div.addEventListener('mousedown', clickFunction);
+            const div = makeDiv(event.target)
 			event.target.remove();
+			startingPost.prepend(div);
+			div.addEventListener('mousedown', clickFunction);
 		}
 		document.removeEventListener('mousemove', onMouseMove);
 		event.target.onmouseup = null;
@@ -92,15 +125,45 @@ function clickFunction(event) {
 	function enterPost(element) {}
 
 	function leavingPost(element) {}
-	//extra function to solve problem i didn't have
-	// event.target.ondragstart = function () {
-	// 	return false;
-	// };
+	
 }
 
+function getChildDivs(post){
+    if (document.querySelector(post).childNodes.length > 0){
+		return Array.from(document.querySelector(post).childNodes).filter((node) => 
+        node.tagName ==='DIV'
+        );
+    }else{
+        return [];
+    }
+}
 
-//make arrays for each ring
-//rings consist of what disks and in what order the disks are in
-//win if the order is 4-3-2-1 on either ring 2 or 3
+function checkWin(div){
+    result = true
+    const postNumArray = getChildDivs('#' + div.parentElement.id).map(item => parseInt(item.dataset.order))
+    console.log(postNumArray)
+    console.log(winningOrder)
+    if(div.parentNode.id == 'post-1' || postNumArray.length !== winningOrder.length){
+        result = false
+    }else{
+        for(let i = 0; i<postNumArray.length; i++){
+            if(postNumArray[i] !== winningOrder[i]){
+                result = false
+            }
+        }
+    }
+    console.log(result)
+    return result
+}
 
-//make so that you cn only move the top ring on each pole
+function getDiskAsInt(disk){
+    return parseInt(disk.dataset.order)
+}
+
+function makeDiv(template){
+    let div = document.createElement('DIV');
+	div.classList.add('disk');
+	div.id = template.id;
+	div.dataset.order = template.dataset.order
+    return div
+}

@@ -10,20 +10,17 @@
 <body>
     <header>
         <h1>TOWER OF HANOI</h1>
+        <h4 id = 'movesTracker'>moves: 0</h4>
     </header>
     <div id = 'board'>
         <div id = 'post-1' class = 'post'>
-            <div id = 'block-1' class = 'disk'></div>
-            <div id = 'block-2' class = 'disk'></div>
-            <div id = 'block-3' class = 'disk'></div>
-            <div id = 'block-4' class = 'disk'></div>
+            <div id = 'block-1' class = 'disk' data-order = '1'></div>
+            <div id = 'block-2' class = 'disk' data-order = '2'></div>
+            <div id = 'block-3' class = 'disk' data-order = '3'></div>
+            <div id = 'block-4' class = 'disk' data-order = '4'></div>
         </div>
-        <div id = 'post-2' class = 'post'>
-            <div class='line'></div>
-        </div>
-        <div id = 'post-3' class = 'post'>
-            <div class='line'></div>
-        </div>
+        <div id = 'post-2' class = 'post'></div>
+        <div id = 'post-3' class = 'post'></div>
     </div>
     <footer></footer>
     <script src = 'script.js'></script>
