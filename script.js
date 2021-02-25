@@ -16,6 +16,7 @@ function clickFunction(event) {
 	let currentPost = null;
 	let startingPost = event.target.parentElement;
     let hasMoved = false
+	let diskMoved = null
 
 	//change styling so that ball is cleanly movable
     event.target.style.position = 'absolute';
@@ -59,13 +60,7 @@ function clickFunction(event) {
 		//set var postBelow equal to the elem if it is a post
 		let postBelow = elemBelow.closest('.post');
 		if (postBelow != currentPost) {
-			if (currentPost) {
-				leavingPost(currentPost);
-			}
 			currentPost = postBelow;
-			if (currentPost) {
-				enterPost(currentPost);
-			}
 		}
 	}
 
@@ -83,11 +78,10 @@ function clickFunction(event) {
             moves++
             movesTracker.innerText = `moves: ${moves}`
 			if(getChildDivs("#" + currentPost.id).length > 0){
-                const div = makeDiv(event.target)
+                diskMoved = makeDivFromTemplate(event.target)
                 event.target.remove();
-                currentPost.prepend(div);
-                checkWin(div)
-                div.addEventListener('mousedown', clickFunction);
+                currentPost.prepend(diskMoved);
+                diskMoved.addEventListener('mousedown', clickFunction);
                 getChildDivs('#' + currentPost.id)[1].removeEventListener(
 					'mousedown',
 					clickFunction
@@ -100,11 +94,10 @@ function clickFunction(event) {
 					);
                 }
             }else{
-                const div = makeDiv(event.target)
+                diskMoved = makeDivFromTemplate(event.target)
 				event.target.remove();
-				currentPost.prepend(div);
-                checkWin(div)
-				div.addEventListener('mousedown', clickFunction);
+				currentPost.prepend(diskMoved);
+				diskMoved.addEventListener('mousedown', clickFunction);
                 if (getChildDivs('#' + startingPost.id).length > 0) {
 					getChildDivs('#' + startingPost.id)[0].addEventListener(
 						'mousedown',
@@ -113,19 +106,16 @@ function clickFunction(event) {
 				}
             }
 		} else {
-            const div = makeDiv(event.target)
+            diskMoved = makeDivFromTemplate(event.target)
 			event.target.remove();
-			startingPost.prepend(div);
-			div.addEventListener('mousedown', clickFunction);
+			startingPost.prepend(diskMoved);
+			diskMoved.addEventListener('mousedown', clickFunction);
 		}
 		document.removeEventListener('mousemove', onMouseMove);
 		event.target.onmouseup = null;
+		checkWin(diskMoved)
 	});
 
-	function enterPost(element) {}
-
-	function leavingPost(element) {}
-	
 }
 
 function getChildDivs(post){
@@ -141,8 +131,6 @@ function getChildDivs(post){
 function checkWin(div){
     result = true
     const postNumArray = getChildDivs('#' + div.parentElement.id).map(item => parseInt(item.dataset.order))
-    console.log(postNumArray)
-    console.log(winningOrder)
     if(div.parentNode.id == 'post-1' || postNumArray.length !== winningOrder.length){
         result = false
     }else{
@@ -153,17 +141,58 @@ function checkWin(div){
         }
     }
     console.log(result)
+	if(result){
+		playAgain()
+		alert("you won the game!")
+	}
     return result
+}
+
+function playAgain(){
+	gameWon = false;
+	moves = 0;
+	movesTracker.innerText = `moves: 0`
+	removeAllChildNodes(document.querySelector('#post-1'))
+	removeAllChildNodes(document.querySelector('#post-2'))
+	removeAllChildNodes(document.querySelector('#post-3'))
+	const div1 = makeDivFromScratch("block-1", '1')
+	const div2 = makeDivFromScratch('block-2', '2');
+	const div3 = makeDivFromScratch('block-3', '3');
+	const div4 = makeDivFromScratch('block-4', '4');
+	document.querySelector('#post-1').appendChild(div1)
+	document.querySelector('#post-1').appendChild(div2);
+	document.querySelector('#post-1').appendChild(div3);
+	document.querySelector('#post-1').appendChild(div4);
+
+	postList.forEach(function (post) {
+		post = getChildDivs('#' + post.id);
+		if (post.length > 0) post[0].addEventListener('mousedown', clickFunction);
+	});
+
 }
 
 function getDiskAsInt(disk){
     return parseInt(disk.dataset.order)
 }
 
-function makeDiv(template){
+function makeDivFromTemplate(template){
     let div = document.createElement('DIV');
 	div.classList.add('disk');
 	div.id = template.id;
 	div.dataset.order = template.dataset.order
     return div
+}
+
+function makeDivFromScratch(ID, order){
+	let div = document.createElement('DIV');
+	div.classList.add('disk');
+	div.id = ID;
+	div.dataset.order = order;
+	return div;
+}
+
+function removeAllChildNodes(parent) {
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
 }
