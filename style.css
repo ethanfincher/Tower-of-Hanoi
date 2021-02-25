@@ -1,0 +1,176 @@
+
+body{
+    font-family: 'Roboto Mono', monospace;
+    background-color: #7CB9E8
+}
+
+header{
+    text-align: center;
+    height: 200px;
+    background-color: #15f4ee;
+    padding-top: .1px;
+    font-family: 'Press Start 2P', cursive;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+h1{
+    font-size:65px;
+}
+
+h2{
+    font-family: 'Stick', sans-serif;
+    font-size: 36px;
+    margin-top: 5px;
+}
+
+p{
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 900;
+    margin-top: -12px;
+}
+
+h3{
+    font-family: 'Reggae One', cursive;
+    font-size: 32px;
+}
+button{
+    background-color: #FF2400;
+    border-radius: 10px;
+    border: 1px;
+    padding: 8px 12px;
+    font-size: 18px;
+    color: #F0F0F0;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    font-style: italic;
+    cursor: pointer;
+}
+
+p#end-game-intructions{
+    font-size: 19px;
+}
+
+.post{
+    width: 60px;
+    background-color: gray;
+    position: relative;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+#board{
+    display: flex;
+    justify-content: space-around;
+    background-color: lightblue;
+    height: 450px;
+    border-bottom: 10px solid gray;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+}
+
+.disk{
+    cursor: pointer;
+    height: 45px;
+    box-sizing: border-box;
+    position: static;
+}
+
+/* margin left = 50% (width - 30) */
+#block-1{
+    background-color: red;
+    width: 80px;
+    margin-left: -10px
+}
+
+#block-2{
+    background-color: orange;
+    width: 110px;
+    margin-left: -25px;
+}
+
+#block-3{
+    background-color: green;
+    width: 140px;
+    margin-left: -40px;
+}
+
+#block-4{
+    background-color: blue;
+    width: 170px;
+    margin-left: -55px;
+}
+
+/* modal design idea from w3 schools https://www.w3schools.com/howto/howto_css_modals.asp */
+#welcome-screen{
+    display: auto; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+
+
+.modal {
+    background-image: linear-gradient(red, yellow);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 0 20px 20px 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid orangered;
+}
+
+#win-screen{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,.4); /* Black w/ opacity */
+    -webkit-animation: fadeIn;
+    -webkit-animation-duration: 1s;
+}
+
+#win-modal-content{
+    
+}
+
+
+.end-game-buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+    margin: 0 auto;
+}
+
+@-webkit-keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@media (max-width: 950px){
+    h1{
+        font-size: 50px;
+    }
+}
+@media (max-height: 675px){
+    #board{
+        height:300px
+    }
+}
