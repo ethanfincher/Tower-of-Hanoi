@@ -106,7 +106,7 @@ p#end-game-intructions{
 
 /* modal design idea from w3 schools https://www.w3schools.com/howto/howto_css_modals.asp */
 #welcome-screen{
-    display: auto; /* Hidden by default */
+    display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
