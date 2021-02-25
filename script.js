@@ -10,7 +10,6 @@ const endButton = document.querySelector('#end')
 const winMessage = document.querySelector('#win-message')
 
 let postList = getChildDivs('#board')
-let gameWon = false
 let moves = 0
 const winningOrder = getChildDivs('#' + postList[0].id).map(item => parseInt(item.dataset.order))
 const movesTracker = document.querySelector('#movesTracker')
@@ -163,7 +162,6 @@ function checkWin(div){
 }
 
 function playAgain(){
-	gameWon = false;
 	moves = 0;
 	movesTracker.innerText = `moves: 0`
 	removeAllChildNodes(document.querySelector('#post-1'))
