@@ -1,3 +1,13 @@
+//begin with starting game after let's play button is clicked.
+const startButton = document.querySelector('#start')
+const startModal = document.querySelector("#welcome-screen")
+startButton.addEventListener("click", () => startModal.style.display = 'none')
+
+//end modal selectors
+const winScreen = document.querySelector('#win-screen')
+const playAgainButton = document.querySelector('#play-again')
+const endButton = document.querySelector('#end')
+const winMessage = document.querySelector('#win-message')
 
 let postList = getChildDivs('#board')
 let gameWon = false
@@ -28,8 +38,6 @@ function clickFunction(event) {
 	//create point clicked on within the div
 	let shiftX = event.clientX - event.target.getBoundingClientRect().left + leftMargin
 	let shiftY = event.clientY - event.target.getBoundingClientRect().top + marginTop + distanceFromBottom
-
-	// //move into body so that the absolute positioning responds to body
     
 	// function to stick div to mouse location on square
 	function moveTo(spotX, spotY) {
@@ -40,6 +48,8 @@ function clickFunction(event) {
 		event.target.style.left = spotX - shiftX + 'px';
 		event.target.style.top = spotY - shiftY + 'px';
 	}
+	//call moveTo to put block at starting point of mouse
+	moveTo(event.clientX, event.clientY)
 
 	// //use event position to point under mouse using moveTo function
 	function onMouseMove(moveEvent) {
@@ -142,8 +152,12 @@ function checkWin(div){
     }
     console.log(result)
 	if(result){
-		playAgain()
-		alert("you won the game!")
+		winMessage.innerText = `You won! It only took you ${moves} moves`
+		winScreen.style.display = "block"
+		endButton.addEventListener('click', () => winScreen.style.display = 'none')
+		playAgainButton.addEventListener('click', () => {
+			playAgain(), winScreen.style.display = 'none'
+		})
 	}
     return result
 }

@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- start modal -->
+    <div id = 'welcome-screen'>
+        <div id = 'start-modal-content'>
+            <h3>Welcome to Tower of Henoi</h3>
+            <p>The goal of the game</p>
+            <button id = 'start'>Let's Play!</button>
+        </div>
+    </div>
+
+    <!-- end modal -->
+    <div id = 'win-screen'>
+        <div id = 'win-modal-content'>
+            <h2 id = 'win-message'></h2>
+            <p>if you'd like to play again, click the play again button, otherwise click the end button to be taken back to the main screen</p>
+            <div id = 'end-game-buttons'>
+                <button id = 'play-again'>play again</button>
+                <button id = 'end'>end</button>
+            </div>
+        </div>
+    </div>
+
     <header>
         <h1>TOWER OF HANOI</h1>
         <h4 id = 'movesTracker'>moves: 0</h4>
