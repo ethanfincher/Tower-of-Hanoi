@@ -23,3 +23,7 @@ as a player, I want an announcement when I win so I can feel celebrated and know
 wireframes:  
   
 ![Alt text](/images/wireframes.png?raw=true 'wireframe screenshot')  
+  
+major hurdles:  
+getting the drag and drop was really tough, but I was able to figure everything out alright  
+getting elements to stay attached to the mouse was also hard, styling was more of a pain then a hurdle but took a bit of time
