@@ -145,12 +145,9 @@ p#end-game-intructions{
     background-color: rgba(0,0,0,.4); /* Black w/ opacity */
     -webkit-animation: fadeIn;
     -webkit-animation-duration: 1s;
+    animation: fadeIn;
+    animation-duration: 1s;
 }
-
-#win-modal-content{
-    
-}
-
 
 .end-game-buttons{
     display: flex;
@@ -160,6 +157,10 @@ p#end-game-intructions{
 }
 
 @-webkit-keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+@keyframes fadeIn{
     from{opacity: 0;}
     to{opacity: 1;}
 }

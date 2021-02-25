@@ -149,7 +149,6 @@ function checkWin(div){
             }
         }
     }
-    console.log(result)
 	if(result){
 		winMessage.innerText = `You won! It only took you ${moves} moves`
 		winScreen.style.display = "block"
